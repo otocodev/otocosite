@@ -17,7 +17,28 @@
     <p style="font-size: 8px; opacity: 0.2; margin-top: 40px;">i love my wife</p>
     <img src="manul%20for%20wife.jpg" alt="manul for wife" style="max-width: 300px; height: auto; display: block; margin-top: 10px;" />
 
-    <script src="script.js"></script>
+    <p style="font-size: 11px; opacity: 0.35; margin-top: 25px; letter-spacing: 0.5px;">visits: <span id="visit-count">...</span></p>
+
+    <script>
+      (async function() {
+        const sessionKey = 'otoco_home_visited';
+        const hasVisited = sessionStorage.getItem(sessionKey);
+        const endpoint = hasVisited
+          ? 'https://countapi.mileshilliard.com/api/v1/get/otoco_home_8f3d1b9a'
+          : 'https://countapi.mileshilliard.com/api/v1/hit/otoco_home_8f3d1b9a';
+
+        try {
+          const res = await fetch(endpoint);
+          const data = await res.json();
+          if (typeof data.value === 'number') {
+            document.getElementById('visit-count').textContent = data.value;
+            sessionStorage.setItem(sessionKey, 'true');
+          }
+        } catch (e) {
+          document.getElementById('visit-count').textContent = '';
+        }
+      })();
+    </script>
 
 </body>
 </html>

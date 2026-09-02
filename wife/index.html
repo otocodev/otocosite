@@ -9,5 +9,28 @@
 <body>
     <p>haiii wife</p>
     <video src="../IMG_9703.mov" controls autoplay loop muted playsinline style="max-width: 320px; width: 90%; height: auto; border-radius: 8px; margin-top: 10px;"></video>
+
+    <p style="font-size: 11px; opacity: 0.35; margin-top: 25px; letter-spacing: 0.5px;">visits: <span id="visit-count">...</span></p>
+
+    <script>
+      (async function() {
+        const sessionKey = 'otoco_wife_visited';
+        const hasVisited = sessionStorage.getItem(sessionKey);
+        const endpoint = hasVisited
+          ? 'https://countapi.mileshilliard.com/api/v1/get/otoco_wife_7c2e4a6b'
+          : 'https://countapi.mileshilliard.com/api/v1/hit/otoco_wife_7c2e4a6b';
+
+        try {
+          const res = await fetch(endpoint);
+          const data = await res.json();
+          if (typeof data.value === 'number') {
+            document.getElementById('visit-count').textContent = data.value;
+            sessionStorage.setItem(sessionKey, 'true');
+          }
+        } catch (e) {
+          document.getElementById('visit-count').textContent = '';
+        }
+      })();
+    </script>
 </body>
 </html>
